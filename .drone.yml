@@ -1,0 +1,35 @@
+---
+kind: pipeline
+name: golangci-lint
+
+steps:
+- name: golangci-lint-run
+  image: rancher/drone-golangci-lint:latest
+  failure: ignore
+
+---
+kind: pipeline
+name: docker
+
+steps:
+- name: publish
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: rancher/drone-golangci-lint
+    tags: latest
+  when:
+    instance:
+      - drone-publish.rancher.io
+    ref:
+      include:
+        - "refs/heads/*"
+        - "refs/tags/*"
+        - "refs/pull/*"
+    event:
+      - push
+      - tag
+
