@@ -8,7 +8,7 @@ The following snippet should be applied to the `.drone.yml` file:
 
 ```
 kind: pipeline
-name: golangci-lint 
+name: golangci-lint
 
 steps:
 - name: golangci-lint
